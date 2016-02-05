@@ -17,7 +17,7 @@ module.exports = function (options) {
             options.common + '/**/*.scss',
             '!' + options.common + '/index.scss',
             '!' + options.common + '/vendor.scss'
-        ], { read: false }).pipe($.print());
+        ], { read: false });
 
         var injectOptions = {
             transform: function (filePath) {
