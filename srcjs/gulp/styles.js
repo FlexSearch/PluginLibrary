@@ -14,10 +14,10 @@ module.exports = function (options) {
         };
 
         var injectFiles = gulp.src([
-            '{' + options.src + ',' + options.common + '}' + '/**/*.scss',
-            '!' + '{' + options.src + ',' + options.common + '}' + '/index.scss',
-            '!' + '{' + options.src + ',' + options.common + '}' + '/vendor.scss'
-        ], { read: false });
+            options.common + '/**/*.scss',
+            '!' + options.common + '/index.scss',
+            '!' + options.common + '/vendor.scss'
+        ], { read: false }).pipe($.print());
 
         var injectOptions = {
             transform: function (filePath) {
@@ -48,10 +48,21 @@ module.exports = function (options) {
             .pipe($.sourcemaps.write())
             .pipe(gulp.dest(options.tmp + '/serve/app/'))
             .pipe(browserSync.reload({ stream: true }));
+        
+        // Copy scss files that weren't injected in index.scss
+        var userScss = 
+            gulp.src(options.src + '/**/*.scss')
+            .pipe($.sourcemaps.init())
+            .pipe($.sass(sassOptions)).on('error', options.errorHandler('Sass'))
+            .pipe($.autoprefixer()).on('error', options.errorHandler('Autoprefixer'))
+            .pipe($.sourcemaps.write())
+            .pipe(gulp.dest(options.tmp + '/serve/app/'))
+            .pipe(browserSync.reload({ stream: true }));
+            
 
         var css = gulp.src(options.src + '/**/*.css')
             .pipe(gulp.dest(options.tmp + '/serve/app/'));
 
-        return merge(scss, css);
+        return merge(scss, userScss, css);
     });
 };
