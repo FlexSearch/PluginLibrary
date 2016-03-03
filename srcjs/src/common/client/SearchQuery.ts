@@ -6,7 +6,7 @@ module API.Client {
      */
     export interface SearchQuery {
         /**
-         * Unique name of the query. This is only required if you are setting up a search profile.
+         * Unique name of the query. This is only required if you are setting up a predefined query.
          */
         queryName?: string;
         /**
@@ -51,21 +51,21 @@ module API.Client {
          */
         returnScore?: boolean;
         /**
-         * Profile Name to be used for profile based searching.
+         * Script that is executed before submitting the search to Lucene. It can be used to modify the incoming Variables
          */
-        searchProfile?: string;
+        preSearchScript?: string;
         /**
-         * Script which can be used to select a search profile. This can help in dynamic selection of search profile based on the incoming data.
+         * Can be used to override the configuration saved in the predefined query with the one which is passed as the Search Query
          */
-        searchProfileScript?: string;
-        /**
-         * Can be used to override the configuration saved in the search profile with the one which is passed as the Search Query
-         */
-        overrideProfileOptions?: boolean;
+        overridePredefinedQueryOptions?: boolean;
         /**
          * Returns an empty string for null values saved in the index rather than the null constant
          */
         returnEmptyStringForNull?: boolean;
+        /**
+         * The mapping between the variable names (the ones prefixed by '@') given in the query string and their actual values
+         */
+        variables?: { [key: string]: string; };
     }
     export module SearchQuery {
         export enum OrderByDirectionEnum { 

@@ -24,6 +24,10 @@ module API.Client {
         /**
          * 
          */
+        modifyIndex?: number;
+        /**
+         * 
+         */
         highlights?: Array<string>;
         /**
          * 

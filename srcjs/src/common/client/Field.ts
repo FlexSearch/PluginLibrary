@@ -10,10 +10,6 @@ module API.Client {
          */
         allowSort?: boolean;
         /**
-         * Signifies if the field should be analyzed using an analyzer.
-         */
-        analyze?: boolean;
-        /**
          * Name of the field
          */
         fieldName: string;
@@ -22,25 +18,9 @@ module API.Client {
          */
         fieldType?: Field.FieldTypeEnum;
         /**
-         * Field Properties
-         */
-        fieldProperty?: Field.FieldPropertyEnum;
-        /**
-         * Signifies if a field should be indexed. A field can only be stored without indexing.
-         */
-        index?: boolean;
-        /**
          * 
          */
         indexAnalyzer?: string;
-        /**
-         * 
-         */
-        indexOptions?: Field.IndexOptionsEnum;
-        /**
-         * 
-         */
-        omitNorms?: boolean;
         /**
          * 
          */
@@ -53,14 +33,6 @@ module API.Client {
          * Similarity defines the components of scoring. Similarity determines how \r\nengine weights terms. FlexSearch interacts with Similarity at both index-time \r\nand query-time.
          */
         similarity?: Field.SimilarityEnum;
-        /**
-         * 
-         */
-        store?: boolean;
-        /**
-         * 
-         */
-        termVector?: Field.TermVectorEnum;
     }
     export module Field {
         export enum FieldTypeEnum { 
@@ -69,45 +41,15 @@ module API.Client {
             Float = <any> 'Float',
             ExactText = <any> 'ExactText',
             Text = <any> 'Text',
-            Highlight = <any> 'Highlight',
             Bool = <any> 'Bool',
             Date = <any> 'Date',
             DateTime = <any> 'DateTime',
-            Custom = <any> 'Custom',
             Stored = <any> 'Stored',
             Long = <any> 'Long',
-        }
-        export enum FieldPropertyEnum { 
-            Indexed = <any> 'Indexed',
-            Tokenized = <any> 'Tokenized',
-            Stored = <any> 'Stored',
-            OmitNorms = <any> 'OmitNorms',
-            OmitTfPostions = <any> 'OmitTfPostions',
-            StoreTermVectors = <any> 'StoreTermVectors',
-            StoreTermPositions = <any> 'StoreTermPositions',
-            StoreTermOffsets = <any> 'StoreTermOffsets',
-            Required = <any> 'Required',
-            OmitPositions = <any> 'OmitPositions',
-            StoreOffsets = <any> 'StoreOffsets',
-            DocValues = <any> 'DocValues',
-            Sorted = <any> 'Sorted',
-            StoreTermPayloads = <any> 'StoreTermPayloads',
-        }
-        export enum IndexOptionsEnum { 
-            DocsOnly = <any> 'DocsOnly',
-            DocsAndFreqs = <any> 'DocsAndFreqs',
-            DocsAndFreqsAndPositions = <any> 'DocsAndFreqsAndPositions',
-            DocsAndFreqsAndPositionsAndOffsets = <any> 'DocsAndFreqsAndPositionsAndOffsets',
         }
         export enum SimilarityEnum { 
             BM25 = <any> 'BM25',
             TFIDF = <any> 'TFIDF',
-        }
-        export enum TermVectorEnum { 
-            DoNotStoreTermVector = <any> 'DoNotStoreTermVector',
-            StoreTermVector = <any> 'StoreTermVector',
-            StoreTermVectorsWithPositions = <any> 'StoreTermVectorsWithPositions',
-            StoreTermVectorsWithPositionsandOffsets = <any> 'StoreTermVectorsWithPositionsandOffsets',
         }
     }
 }

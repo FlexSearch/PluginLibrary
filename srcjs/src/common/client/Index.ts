@@ -16,7 +16,7 @@ module API.Client {
         /**
          * 
          */
-        searchProfiles?: Array<SearchQuery>;
+        predefinedQueries?: Array<SearchQuery>;
         shardConfiguration?: ShardConfiguration;
         indexConfiguration?: IndexConfiguration;
         /**

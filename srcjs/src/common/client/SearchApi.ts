@@ -31,47 +31,6 @@ module API.Client {
             return <T1&T2>objA;
         }
         /**
-         * Test a search profile
-         * This endpoint is useful to test such profiles dynamically, you can test search\nprofiles without adding them to the index. This becomes useful when trying out\ndifferent search profiles. It is advisable to not to use this service directly\nbut through the search UI provided as part of the portal.
-         * @param searchProfileTestDto 
-         * @param id Index Name
-         */
-        public doSearchProfileTest (searchProfileTestDto: SearchProfileTestDto, id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<SearchResultsResponse> {
-            const path = this.basePath + '/indices/{id}/searchprofiletest'
-                .replace('{' + 'id' + '}', String(id));
-            let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            // verify required parameter 'searchProfileTestDto' is set
-            if (!searchProfileTestDto) {
-                throw new Error('Missing required parameter searchProfileTestDto when calling doSearchProfileTest');
-            }
-            // verify required parameter 'id' is set
-            if (!id) {
-                throw new Error('Missing required parameter id when calling doSearchProfileTest');
-            }
-            let httpRequestParams: any = {
-                method: 'POST',
-                url: path,
-                json: true,
-                data: searchProfileTestDto,
-                params: queryParameters,
-                headers: headerParams
-            };
-            if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-            }
-            return this.$http(httpRequestParams);
-        }
-        /**
-         * Version of the doSearchProfileTest method, but using the provided error handler.
-         * @param searchProfileTestDto 
-         * @param id Index Name
-         */
-        public doSearchProfileTestHandled (searchProfileTestDto: SearchProfileTestDto, id: string, extraHttpRequestParams?: any ) : ng.IPromise<SearchResultsResponse> {
-            return this.doSearchProfileTest(searchProfileTestDto, id, extraHttpRequestParams)
-                .then(response => response.data, this.handleError);
-        }
-        /**
          * Search and index
          * Search across the index for documents using SQL like query syntax.\n\n&lt;div class= \&quot;note\&quot;&gt;\nAny parameter passed as part of query string takes precedence over the same\nparameter in the request body.\n&lt;/div&gt;\n\nRefer to the search DSL section to learn more about FlexSearch&#39;s querying capability.
          * @param indexName Index name

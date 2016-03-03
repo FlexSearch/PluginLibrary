@@ -21,7 +21,6 @@
 /// <reference path="CreationId.ts" />
 /// <reference path="IndexExists.ts" />
 /// <reference path="MemoryDetails.ts" />
-/// <reference path="SearchProfileTestDto.ts" />
 /// <reference path="NoBody.ts" />
 /// <reference path="FlexResponse.ts" />
 /// <reference path="AnalyzeTextResponse.ts" />

@@ -77,7 +77,7 @@ module apiHelpers {
     // Get the duplicate that needs to be displayed
     export function getDuplicateBySourceId(sessionId, sourceId, commonApi: API.Client.CommonApi) {
         return commonApi.postSearchHandled({
-            queryString: "type = 'source' and sessionid = '" + sessionId + "' and sourceid = '" + sourceId + "'",
+            queryString: "allof(type, 'source') and allof(sessionid, '" + sessionId + "') and allof(sourceid = '" + sourceId + "')",
             columns: ["*"],
             indexName: "duplicates"
         }, "duplicates")
@@ -89,7 +89,7 @@ module apiHelpers {
             .reduce(function(acc, val) { return acc + ",'" + val + "'" }, "")
             .substr(1);
         return commonApi.postSearchHandled({
-            queryString: "_id eq [" + idStr + "] {clausetype: 'or'}",
+            queryString: "anyof(_id, " + idStr + ")",
             columns: ["*"],
             indexName: indexName
         }, indexName)
@@ -98,7 +98,7 @@ module apiHelpers {
 
     export function getSessionBySessionId(sessionId, commonApi: API.Client.CommonApi) {
         return commonApi.postSearchHandled({
-            queryString: "type = 'session' and sessionid = '" + sessionId + "'",
+            queryString: "allof(type, 'session') and allof(sessionid, '" + sessionId + "')",
             columns: ["*"],
             indexName: "duplicates"
         }, "duplicates")
@@ -107,7 +107,7 @@ module apiHelpers {
 
     export function getDuplicatesFromSession(sessionId, count, skip, commonApi: API.Client.CommonApi, sortby?, sortDirection?) {
         return commonApi.postSearchHandled({
-            queryString: "type = 'source' and sessionid = '" + sessionId + "'",
+            queryString: "allof(type, 'source') and allof(sessionid, '" + sessionId + "')",
             columns: ["*"],
             count: count,
             skip: skip,
@@ -120,7 +120,7 @@ module apiHelpers {
 
     export function getSessions(count, skip, commonApi: API.Client.CommonApi, sortby?, sortDirection?) {
         return commonApi.postSearchHandled({
-            queryString: "type = 'session'",
+            queryString: "allof(type, 'session')",
             columns: ["*"],
             count: count,
             skip: skip,

@@ -2,7 +2,7 @@
 module API.Client {
     'use strict';
     /**
-     * Represents a request to execute dedupe against a given index and search profile
+     * Represents a request to execute dedupe against a given index and predefined query
      */
     export interface DuplicateDetectionRequest {
         /**
@@ -26,9 +26,9 @@ module API.Client {
          */
         indexName: string;
         /**
-         * The name of the profile used for deduplication.
+         * The name of the query used for deduplication.
          */
-        profileName: string;
+        predefinedQueryName: string;
         /**
          * The maxmimum number of records to scan for deduplication
          */

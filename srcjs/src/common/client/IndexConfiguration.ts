@@ -10,9 +10,9 @@ module API.Client {
          */
         commitTimeSeconds?: number;
         /**
-         * Determines how often the data be committed to the physical medium. Commits are more expensive then flushes so keep the setting as high as possible. Making this setting too high will result in excessive ram usage.
+         * Determines whether to clear all transaction logs before closing an index. This setting is for advance use and should be left to default.
          */
-        commitEveryNFlushes?: number;
+        deleteLogsOnClose?: boolean;
         /**
          * Determines whether to commit first before closing an index
          */
@@ -50,10 +50,6 @@ module API.Client {
          */
         indexVersion?: IndexConfiguration.IndexVersionEnum;
         /**
-         * Signifies if bloom filter should be used for encoding Id field.
-         */
-        useBloomFilterForId?: boolean;
-        /**
          * 
          */
         allowReads?: boolean;
@@ -69,8 +65,8 @@ module API.Client {
             Ram = <any> 'Ram',
         }
         export enum IndexVersionEnum { 
-            Lucene_4_x_x = <any> 'Lucene_4_x_x',
-            Lucene_5_0_0 = <any> 'Lucene_5_0_0',
+            FlexSearch_1A = <any> 'FlexSearch_1A',
+            FlexSearch_1B = <any> 'FlexSearch_1B',
         }
     }
 }
