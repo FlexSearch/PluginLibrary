@@ -7,37 +7,37 @@
  */
 module apiHelpers {
     export class SourceRecord {
-        SessionId: string;
-        SourceId: string;
-        SourceRecordId: string;
-        SourceContent: string;
-        SourceDisplayName: string;
-        SourceStatus: string;
-        TotalDupes: number;
-        Notes: string;
+        sessionId: string;
+        sourceId: string;
+        sourceRecordId: string;
+        sourceContent: string;
+        sourceDisplayName: string;
+        sourceStatus: string;
+        totalDupes: number;
+        notes: string;
     }
 
     export class TargetRecord {
-        TargetId: string;
-        TargetRecordId: string;
-        TargetDisplayName: string;
-        TrueDuplicate: boolean;
-        Quality: string;
-        TargetScore: number;
+        targetId: string;
+        targetRecordId: string;
+        targetDisplayName: string;
+        trueDuplicate: boolean;
+        quality: string;
+        targetScore: number;
     }
 
     export class Session {
-        Id: string;
-        SessionId: string;
-        IndexName: string;
-        ProfileName: string;
-        JobStartTime: Date;
-        JobEndTime: Date;
-        SelectionQuery: string;
-        DisplayFieldName: string;
-        RecordsReturned: number;
-        RecordsAvailable: number;
-        ThreadCount: number;
+        id: string;
+        sessionId: string;
+        indexName: string;
+        profileName: string;
+        jobStartTime: Date;
+        jobEndTime: Date;
+        selectionQuery: string;
+        displayFieldName: string;
+        recordsReturned: number;
+        recordsAvailable: number;
+        threadCount: number;
     }
 
     export class Duplicate extends SourceRecord {
@@ -56,14 +56,14 @@ module apiHelpers {
 
     export function updateDuplicate(duplicate: Duplicate, commonApi: API.Client.CommonApi) {
         var fields: { [key: string]: string } = {
-            sessionid: duplicate.SessionId,
-            sourcedisplayname: duplicate.SourceDisplayName,
-            sourceid: duplicate.SourceId,
-            sourcerecordid: duplicate.SourceRecordId,
-            totaldupesfound: duplicate.TotalDupes.toString(),
+            sessionid: duplicate.sessionId,
+            sourcedisplayname: duplicate.sourceDisplayName,
+            sourceid: duplicate.sourceId,
+            sourcerecordid: duplicate.sourceRecordId,
+            totaldupesfound: duplicate.totalDupes.toString(),
             type: "source",
-            notes: duplicate.Notes,
-            sourcestatus: duplicate.SourceStatus,
+            notes: duplicate.notes,
+            sourcestatus: duplicate.sourceStatus,
             targetrecords: JSON.stringify(duplicate.Targets)
         };
 
@@ -77,7 +77,7 @@ module apiHelpers {
     // Get the duplicate that needs to be displayed
     export function getDuplicateBySourceId(sessionId, sourceId, commonApi: API.Client.CommonApi) {
         return commonApi.postSearchHandled({
-            queryString: "allof(type, 'source') and allof(sessionid, '" + sessionId + "') and allof(sourceid = '" + sourceId + "')",
+            queryString: "allof(type, 'source') and allof(sessionid, '" + sessionId + "') and allof(sourceid, '" + sourceId + "')",
             columns: ["*"],
             indexName: "duplicates"
         }, "duplicates")
@@ -110,7 +110,7 @@ module apiHelpers {
             queryString: "allof(type, 'source') and allof(sessionid, '" + sessionId + "')",
             columns: ["*"],
             count: count,
-            skip: skip,
+            skip: skip ? skip : undefined,
             orderBy: sortby,
             orderByDirection: getOrderByDirection(sortDirection),
             indexName: "duplicates"
