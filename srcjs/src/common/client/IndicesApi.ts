@@ -31,10 +31,10 @@ module API.Client {
             return <T1&T2>objA;
         }
         /**
-         * Returns all the indexes
+         * Get all indices
          * 
          */
-        public getAllIndex (extraHttpRequestParams?: any ) : ng.IHttpPromise<IndicesResponse> {
+        public getAllIndices (extraHttpRequestParams?: any ) : ng.IHttpPromise<GetAllIndicesResponse> {
             const path = this.basePath + '/indices';
             let queryParameters: any = {};
             let headerParams: any = this.extendObj({}, this.defaultHeaders);
@@ -51,10 +51,10 @@ module API.Client {
             return this.$http(httpRequestParams);
         }
         /**
-         * Version of the getAllIndex method, but using the provided error handler.
+         * Version of the getAllIndices method, but using the provided error handler.
          */
-        public getAllIndexHandled (extraHttpRequestParams?: any ) : ng.IPromise<IndicesResponse> {
-            return this.getAllIndex(extraHttpRequestParams)
+        public getAllIndicesHandled (extraHttpRequestParams?: any ) : ng.IPromise<GetAllIndicesResponse> {
+            return this.getAllIndices(extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
@@ -62,7 +62,7 @@ module API.Client {
          * 
          * @param index 
          */
-        public createIndex (index: Index, extraHttpRequestParams?: any ) : ng.IHttpPromise<CreationIdResponse> {
+        public createIndex (index: Index, extraHttpRequestParams?: any ) : ng.IHttpPromise<CreateIndexResponse> {
             const path = this.basePath + '/indices';
             let queryParameters: any = {};
             let headerParams: any = this.extendObj({}, this.defaultHeaders);
@@ -87,16 +87,16 @@ module API.Client {
          * Version of the createIndex method, but using the provided error handler.
          * @param index 
          */
-        public createIndexHandled (index: Index, extraHttpRequestParams?: any ) : ng.IPromise<CreationIdResponse> {
+        public createIndexHandled (index: Index, extraHttpRequestParams?: any ) : ng.IPromise<CreateIndexResponse> {
             return this.createIndex(index, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
-         * Returns an index by the ID
+         * Get an index
          * This service will return a status of 404 when index is not present on the server.
          * @param id Index name
          */
-        public getIndex (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<IndexResponse> {
+        public getIndex (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<GetIndexResponse> {
             const path = this.basePath + '/indices/{id}'
                 .replace('{' + 'id' + '}', String(id));
             let queryParameters: any = {};
@@ -121,16 +121,16 @@ module API.Client {
          * Version of the getIndex method, but using the provided error handler.
          * @param id Index name
          */
-        public getIndexHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<IndexResponse> {
+        public getIndexHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<GetIndexResponse> {
             return this.getIndex(id, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
-         * Deletes an index by ID
-         * Index deletion happens in two parts, first the index configuration file is\ndeleted from the configurations folder, then the index is deleted from the data\nfolder. In case any error is encountered the cleanup will be performed on the\nserver restart.
+         * Deletes an index
+         * Index deletion happens in two parts, first the index configuration file is deleted from the configurations folder, then the index is deleted from the data folder. In case any error is encountered the cleanup will be performed on the server restart.
          * @param id Index name
          */
-        public deleteIndex (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<FlexResponse> {
+        public deleteIndex (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<DeleteIndexResponse> {
             const path = this.basePath + '/indices/{id}'
                 .replace('{' + 'id' + '}', String(id));
             let queryParameters: any = {};
@@ -155,17 +155,17 @@ module API.Client {
          * Version of the deleteIndex method, but using the provided error handler.
          * @param id Index name
          */
-        public deleteIndexHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<FlexResponse> {
+        public deleteIndexHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<DeleteIndexResponse> {
             return this.deleteIndex(id, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
          * Update the configuration of an index
-         * &lt;div class=\&quot;important\&quot;&gt;\nThe Index Version cannot be modified\n&lt;/div&gt;
+         * The Index Version cannot be modified.
          * @param indexConfiguration 
          * @param id Index Name
          */
-        public updateIndexConfiguration (indexConfiguration: IndexConfiguration, id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<FlexResponse> {
+        public updateIndexConfiguration (indexConfiguration: IndexConfiguration, id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<UpdateIndexConfigurationResponse> {
             const path = this.basePath + '/indices/{id}/configuration'
                 .replace('{' + 'id' + '}', String(id));
             let queryParameters: any = {};
@@ -196,13 +196,13 @@ module API.Client {
          * @param indexConfiguration 
          * @param id Index Name
          */
-        public updateIndexConfigurationHandled (indexConfiguration: IndexConfiguration, id: string, extraHttpRequestParams?: any ) : ng.IPromise<FlexResponse> {
+        public updateIndexConfigurationHandled (indexConfiguration: IndexConfiguration, id: string, extraHttpRequestParams?: any ) : ng.IPromise<UpdateIndexConfigurationResponse> {
             return this.updateIndexConfiguration(indexConfiguration, id, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
          * Check if an index exists
-         * This endpoint can be used to check if an index is present in the system. This\nendpoint is a lighter alternative to accessing the index by an ID as the\nresponse is smaller in size.
+         * This endpoint can be used to check if an index is present in the system. This endpoint is a lighter alternative to accessing the index by an ID as the response is smaller in size.
          * @param id Index name
          */
         public indexExists (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<IndexExistsResponse> {
@@ -235,11 +235,93 @@ module API.Client {
                 .then(response => response.data, this.handleError);
         }
         /**
+         * Update the Index Fields
+         * Any analyzer which is to be used as part of an index field should be defined before adding the field to the index. Always re-index the data after a field update, otherwise you may get unexpected results. New fields added as part of fields update will not have any data available for the older records, in such cases if the indexing is not done the engine will use default values for the field type. If an existing field is removed then the data associated with that field will not be accessible even though the data will not be removed from the index itself.
+         * @param fieldsUpdateRequest 
+         * @param id Index Name
+         */
+        public updateIndexFields (fieldsUpdateRequest: FieldsUpdateRequest, id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<UpdateIndexFieldsResponse> {
+            const path = this.basePath + '/indices/{id}/fields'
+                .replace('{' + 'id' + '}', String(id));
+            let queryParameters: any = {};
+            let headerParams: any = this.extendObj({}, this.defaultHeaders);
+            // verify required parameter 'fieldsUpdateRequest' is set
+            if (!fieldsUpdateRequest) {
+                throw new Error('Missing required parameter fieldsUpdateRequest when calling updateIndexFields');
+            }
+            // verify required parameter 'id' is set
+            if (!id) {
+                throw new Error('Missing required parameter id when calling updateIndexFields');
+            }
+            let httpRequestParams: any = {
+                method: 'PUT',
+                url: path,
+                json: true,
+                data: fieldsUpdateRequest,
+                params: queryParameters,
+                headers: headerParams
+            };
+            if (extraHttpRequestParams) {
+                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+            }
+            return this.$http(httpRequestParams);
+        }
+        /**
+         * Version of the updateIndexFields method, but using the provided error handler.
+         * @param fieldsUpdateRequest 
+         * @param id Index Name
+         */
+        public updateIndexFieldsHandled (fieldsUpdateRequest: FieldsUpdateRequest, id: string, extraHttpRequestParams?: any ) : ng.IPromise<UpdateIndexFieldsResponse> {
+            return this.updateIndexFields(fieldsUpdateRequest, id, extraHttpRequestParams)
+                .then(response => response.data, this.handleError);
+        }
+        /**
+         * Adds or updates a predefined query for the given index
+         * 
+         * @param searchQuery 
+         * @param id Index Name
+         */
+        public updateIndexPredefinedQuery (searchQuery: SearchQuery, id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<UpdateIndexPredefinedQueryResponse> {
+            const path = this.basePath + '/indices/{id}/predefinedQuery'
+                .replace('{' + 'id' + '}', String(id));
+            let queryParameters: any = {};
+            let headerParams: any = this.extendObj({}, this.defaultHeaders);
+            // verify required parameter 'searchQuery' is set
+            if (!searchQuery) {
+                throw new Error('Missing required parameter searchQuery when calling updateIndexPredefinedQuery');
+            }
+            // verify required parameter 'id' is set
+            if (!id) {
+                throw new Error('Missing required parameter id when calling updateIndexPredefinedQuery');
+            }
+            let httpRequestParams: any = {
+                method: 'PUT',
+                url: path,
+                json: true,
+                data: searchQuery,
+                params: queryParameters,
+                headers: headerParams
+            };
+            if (extraHttpRequestParams) {
+                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+            }
+            return this.$http(httpRequestParams);
+        }
+        /**
+         * Version of the updateIndexPredefinedQuery method, but using the provided error handler.
+         * @param searchQuery 
+         * @param id Index Name
+         */
+        public updateIndexPredefinedQueryHandled (searchQuery: SearchQuery, id: string, extraHttpRequestParams?: any ) : ng.IPromise<UpdateIndexPredefinedQueryResponse> {
+            return this.updateIndexPredefinedQuery(searchQuery, id, extraHttpRequestParams)
+                .then(response => response.data, this.handleError);
+        }
+        /**
          * Returns the size of an index
-         * The return size may be higher than the actual size of the documents present in\nthe index. The return value includes the space occupied by the transaction logs\nand older segment files which are not cleaned up as part of the last comment.
+         * The return size may be higher than the actual size of the documents present in the index. The return value includes the space occupied by the transaction logs and older segment files which are not cleaned up as part of the last comment.
          * @param id Index name
          */
-        public getIndexSize (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<IndexSizeResponse> {
+        public getIndexSize (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<GetIndexSizeResponse> {
             const path = this.basePath + '/indices/{id}/size'
                 .replace('{' + 'id' + '}', String(id));
             let queryParameters: any = {};
@@ -264,105 +346,23 @@ module API.Client {
          * Version of the getIndexSize method, but using the provided error handler.
          * @param id Index name
          */
-        public getIndexSizeHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<IndexSizeResponse> {
+        public getIndexSizeHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<GetIndexSizeResponse> {
             return this.getIndexSize(id, extraHttpRequestParams)
-                .then(response => response.data, this.handleError);
-        }
-        /**
-         * Update the Index Fields
-         * Any analyser which is to be used as part of an index field should be defined\nbefore adding the field to the index.\n\n&lt;div class=\&quot;note\&quot;&gt;\nAlways reindex the data after a field update, otherwise you may get unexpected\nresults.\n&lt;/div&gt;\n\n&lt;div class=\&quot;important\&quot;&gt;\nNew fields added as part of fields update will not have any data available for\nthe older records, in such cases if the indexing is not done the engine will use\ndefault values for the field type. If an existing field is removed then the data\nassociated with that field will not be accessible even though the data will not\nbe removed from the index itself.\n&lt;/div&gt;
-         * @param fieldsUpdateRequest 
-         * @param indexName Index Name
-         */
-        public updateIndexFields (fieldsUpdateRequest: FieldsUpdateRequest, indexName: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<FlexResponse> {
-            const path = this.basePath + '/indices/{indexName}/fields'
-                .replace('{' + 'indexName' + '}', String(indexName));
-            let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            // verify required parameter 'fieldsUpdateRequest' is set
-            if (!fieldsUpdateRequest) {
-                throw new Error('Missing required parameter fieldsUpdateRequest when calling updateIndexFields');
-            }
-            // verify required parameter 'indexName' is set
-            if (!indexName) {
-                throw new Error('Missing required parameter indexName when calling updateIndexFields');
-            }
-            let httpRequestParams: any = {
-                method: 'PUT',
-                url: path,
-                json: true,
-                data: fieldsUpdateRequest,
-                params: queryParameters,
-                headers: headerParams
-            };
-            if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-            }
-            return this.$http(httpRequestParams);
-        }
-        /**
-         * Version of the updateIndexFields method, but using the provided error handler.
-         * @param fieldsUpdateRequest 
-         * @param indexName Index Name
-         */
-        public updateIndexFieldsHandled (fieldsUpdateRequest: FieldsUpdateRequest, indexName: string, extraHttpRequestParams?: any ) : ng.IPromise<FlexResponse> {
-            return this.updateIndexFields(fieldsUpdateRequest, indexName, extraHttpRequestParams)
-                .then(response => response.data, this.handleError);
-        }
-        /**
-         * Adds or updates a predefined query for the given index
-         * 
-         * @param searchQuery 
-         * @param indexName Index Name
-         */
-        public updateIndexPredefinedQuery (searchQuery: SearchQuery, indexName: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<FlexResponse> {
-            const path = this.basePath + '/indices/{indexName}/predefinedQuery'
-                .replace('{' + 'indexName' + '}', String(indexName));
-            let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            // verify required parameter 'searchQuery' is set
-            if (!searchQuery) {
-                throw new Error('Missing required parameter searchQuery when calling updateIndexPredefinedQuery');
-            }
-            // verify required parameter 'indexName' is set
-            if (!indexName) {
-                throw new Error('Missing required parameter indexName when calling updateIndexPredefinedQuery');
-            }
-            let httpRequestParams: any = {
-                method: 'PUT',
-                url: path,
-                json: true,
-                data: searchQuery,
-                params: queryParameters,
-                headers: headerParams
-            };
-            if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-            }
-            return this.$http(httpRequestParams);
-        }
-        /**
-         * Version of the updateIndexPredefinedQuery method, but using the provided error handler.
-         * @param searchQuery 
-         * @param indexName Index Name
-         */
-        public updateIndexPredefinedQueryHandled (searchQuery: SearchQuery, indexName: string, extraHttpRequestParams?: any ) : ng.IPromise<FlexResponse> {
-            return this.updateIndexPredefinedQuery(searchQuery, indexName, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
          * Returns the status of an index
          * This endpoint can be used to determine if an index is online or off-line.
-         * @param indexName Index Name
+         * @param id Index Name
          */
-        public getStatus (indexName: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<GetStatusResponse> {
-            const path = this.basePath + '/indices/{indexName}/status'
-                .replace('{' + 'indexName' + '}', String(indexName));
+        public getIndexStatus (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<GetStatusResponse> {
+            const path = this.basePath + '/indices/{id}/status'
+                .replace('{' + 'id' + '}', String(id));
             let queryParameters: any = {};
             let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            // verify required parameter 'indexName' is set
-            if (!indexName) {
-                throw new Error('Missing required parameter indexName when calling getStatus');
+            // verify required parameter 'id' is set
+            if (!id) {
+                throw new Error('Missing required parameter id when calling getIndexStatus');
             }
             let httpRequestParams: any = {
                 method: 'GET',
@@ -377,11 +377,11 @@ module API.Client {
             return this.$http(httpRequestParams);
         }
         /**
-         * Version of the getStatus method, but using the provided error handler.
-         * @param indexName Index Name
+         * Version of the getIndexStatus method, but using the provided error handler.
+         * @param id Index Name
          */
-        public getStatusHandled (indexName: string, extraHttpRequestParams?: any ) : ng.IPromise<GetStatusResponse> {
-            return this.getStatus(indexName, extraHttpRequestParams)
+        public getIndexStatusHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<GetStatusResponse> {
+            return this.getIndexStatus(id, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
@@ -390,7 +390,7 @@ module API.Client {
          * @param indexName Index Name
          * @param status offline / online
          */
-        public updateStatus (indexName: string, status: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<FlexResponse> {
+        public updateIndexStatus (indexName: string, status: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<UpdateIndexStatusResponse> {
             const path = this.basePath + '/indices/{indexName}/status/{status}'
                 .replace('{' + 'indexName' + '}', String(indexName))
                 .replace('{' + 'status' + '}', String(status));
@@ -398,11 +398,11 @@ module API.Client {
             let headerParams: any = this.extendObj({}, this.defaultHeaders);
             // verify required parameter 'indexName' is set
             if (!indexName) {
-                throw new Error('Missing required parameter indexName when calling updateStatus');
+                throw new Error('Missing required parameter indexName when calling updateIndexStatus');
             }
             // verify required parameter 'status' is set
             if (!status) {
-                throw new Error('Missing required parameter status when calling updateStatus');
+                throw new Error('Missing required parameter status when calling updateIndexStatus');
             }
             let httpRequestParams: any = {
                 method: 'PUT',
@@ -417,12 +417,12 @@ module API.Client {
             return this.$http(httpRequestParams);
         }
         /**
-         * Version of the updateStatus method, but using the provided error handler.
+         * Version of the updateIndexStatus method, but using the provided error handler.
          * @param indexName Index Name
          * @param status offline / online
          */
-        public updateStatusHandled (indexName: string, status: string, extraHttpRequestParams?: any ) : ng.IPromise<FlexResponse> {
-            return this.updateStatus(indexName, status, extraHttpRequestParams)
+        public updateIndexStatusHandled (indexName: string, status: string, extraHttpRequestParams?: any ) : ng.IPromise<UpdateIndexStatusResponse> {
+            return this.updateIndexStatus(indexName, status, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
     }

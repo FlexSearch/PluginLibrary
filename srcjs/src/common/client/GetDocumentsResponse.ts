@@ -1,7 +1,8 @@
 /// <reference path="api.d.ts" />
 module API.Client {
     'use strict';
-    export interface SearchResultsResponse extends FlexResponse {
+    export interface GetDocumentsResponse {
         data?: SearchResults;
+        error?: OperationMessage;
     }
 }

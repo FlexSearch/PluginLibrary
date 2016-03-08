@@ -1,7 +1,8 @@
 /// <reference path="api.d.ts" />
 module API.Client {
     'use strict';
-    export interface MemoryDetailsResponse extends FlexResponse {
+    export interface GetServerMemoryDetailsResponse {
         data?: MemoryDetails;
+        error?: OperationMessage;
     }
 }

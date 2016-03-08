@@ -1,8 +1,8 @@
 /// <reference path="api.d.ts" />
 module API.Client {
     'use strict';
-    export interface GetStatusResponse {
-        data?: IndexStatusResponse;
+    export interface CreateIndexResponse {
+        data?: OperationMessage;
         error?: OperationMessage;
     }
 }

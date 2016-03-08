@@ -31,10 +31,10 @@ module API.Client {
             return <T1&T2>objA;
         }
         /**
-         * Returns all analysers
-         * 
+         * Get all analyzers
+         * Returns all the analyzers present in the system.
          */
-        public getAllAnalyzer (extraHttpRequestParams?: any ) : ng.IHttpPromise<AnalyzersResponse> {
+        public getAllAnalyzers (extraHttpRequestParams?: any ) : ng.IHttpPromise<GetAllAnalyzersResponse> {
             const path = this.basePath + '/analyzers';
             let queryParameters: any = {};
             let headerParams: any = this.extendObj({}, this.defaultHeaders);
@@ -51,18 +51,18 @@ module API.Client {
             return this.$http(httpRequestParams);
         }
         /**
-         * Version of the getAllAnalyzer method, but using the provided error handler.
+         * Version of the getAllAnalyzers method, but using the provided error handler.
          */
-        public getAllAnalyzerHandled (extraHttpRequestParams?: any ) : ng.IPromise<AnalyzersResponse> {
-            return this.getAllAnalyzer(extraHttpRequestParams)
+        public getAllAnalyzersHandled (extraHttpRequestParams?: any ) : ng.IPromise<GetAllAnalyzersResponse> {
+            return this.getAllAnalyzers(extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
-         * Returns an analyzer by ID
-         * 
+         * Get analyzer
+         * Returns an analyzer by name.
          * @param id Analyzer name
          */
-        public getAnalyzer (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<AnalyzerResponse> {
+        public getAnalyzer (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<GetAnalyzerResponse> {
             const path = this.basePath + '/analyzers/{id}'
                 .replace('{' + 'id' + '}', String(id));
             let queryParameters: any = {};
@@ -87,17 +87,17 @@ module API.Client {
          * Version of the getAnalyzer method, but using the provided error handler.
          * @param id Analyzer name
          */
-        public getAnalyzerHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<AnalyzerResponse> {
+        public getAnalyzerHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<GetAnalyzerResponse> {
             return this.getAnalyzer(id, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
-         * Create or update an analyser
-         * 
+         * Create or update an analyzer
+         * This service is idempotent.
          * @param analyzer 
          * @param id Analyzer name
          */
-        public createOrUpdateAnalyzer (analyzer: Analyzer, id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<{}> {
+        public createOrUpdateAnalyzer (analyzer: Analyzer, id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<CreateOrUpdateAnalyzerResponse> {
             const path = this.basePath + '/analyzers/{id}'
                 .replace('{' + 'id' + '}', String(id));
             let queryParameters: any = {};
@@ -128,16 +128,16 @@ module API.Client {
          * @param analyzer 
          * @param id Analyzer name
          */
-        public createOrUpdateAnalyzerHandled (analyzer: Analyzer, id: string, extraHttpRequestParams?: any ) : ng.IPromise<{}> {
+        public createOrUpdateAnalyzerHandled (analyzer: Analyzer, id: string, extraHttpRequestParams?: any ) : ng.IPromise<CreateOrUpdateAnalyzerResponse> {
             return this.createOrUpdateAnalyzer(analyzer, id, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
-         * Deletes an analyser by ID
-         * 
+         * Delete an analyzer
+         * Deletes an analyzer by name.
          * @param id Analyzer name
          */
-        public deleteAnalyzer (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<{}> {
+        public deleteAnalyzer (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<DeleteAnalyzerResponse> {
             const path = this.basePath + '/analyzers/{id}'
                 .replace('{' + 'id' + '}', String(id));
             let queryParameters: any = {};
@@ -162,24 +162,24 @@ module API.Client {
          * Version of the deleteAnalyzer method, but using the provided error handler.
          * @param id Analyzer name
          */
-        public deleteAnalyzerHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<{}> {
+        public deleteAnalyzerHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<DeleteAnalyzerResponse> {
             return this.deleteAnalyzer(id, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
-         * Analyze input next
-         * This endpoint is useful to understand the effect of a particular analyser on\nthe input text. You can use the service with both custom and built-in analysers.\nThe returned response contains the tokenised input.
-         * @param analysisRequest Text to analyze
+         * Analyze input text
+         * This endpoint is useful to understand the effect of a particular analyzer on the input text. You can use the service with both custom and built-in analyzers. The returned response contains the tOKenized input.
+         * @param analyzeText Text to analyze
          * @param id Analyzer name
          */
-        public analyzeText (analysisRequest: AnalysisRequest, id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<AnalyzeTextResponse> {
-            const path = this.basePath + '/analyzers/{id}/analyze'
+        public analyzeText (analyzeText: AnalyzeText, id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<AnalyzeTextResponse> {
+            const path = this.basePath + '/analyzers/{id}/analyzetext'
                 .replace('{' + 'id' + '}', String(id));
             let queryParameters: any = {};
             let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            // verify required parameter 'analysisRequest' is set
-            if (!analysisRequest) {
-                throw new Error('Missing required parameter analysisRequest when calling analyzeText');
+            // verify required parameter 'analyzeText' is set
+            if (!analyzeText) {
+                throw new Error('Missing required parameter analyzeText when calling analyzeText');
             }
             // verify required parameter 'id' is set
             if (!id) {
@@ -189,7 +189,7 @@ module API.Client {
                 method: 'POST',
                 url: path,
                 json: true,
-                data: analysisRequest,
+                data: analyzeText,
                 params: queryParameters,
                 headers: headerParams
             };
@@ -200,11 +200,11 @@ module API.Client {
         }
         /**
          * Version of the analyzeText method, but using the provided error handler.
-         * @param analysisRequest Text to analyze
+         * @param analyzeText Text to analyze
          * @param id Analyzer name
          */
-        public analyzeTextHandled (analysisRequest: AnalysisRequest, id: string, extraHttpRequestParams?: any ) : ng.IPromise<AnalyzeTextResponse> {
-            return this.analyzeText(analysisRequest, id, extraHttpRequestParams)
+        public analyzeTextHandled (analyzeText: AnalyzeText, id: string, extraHttpRequestParams?: any ) : ng.IPromise<AnalyzeTextResponse> {
+            return this.analyzeText(analyzeText, id, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
     }

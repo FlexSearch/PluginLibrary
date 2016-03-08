@@ -1,7 +1,8 @@
 /// <reference path="api.d.ts" />
 module API.Client {
     'use strict';
-    export interface IndexSizeResponse extends FlexResponse {
+    export interface GetIndexSizeResponse {
         data?: number;
+        error?: OperationMessage;
     }
 }

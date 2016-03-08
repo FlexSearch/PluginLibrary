@@ -1,7 +1,8 @@
 /// <reference path="api.d.ts" />
 module API.Client {
     'use strict';
-    export interface AnalyzerResponse extends FlexResponse {
+    export interface GetAnalyzerResponse {
         data?: Analyzer;
+        error?: OperationMessage;
     }
 }

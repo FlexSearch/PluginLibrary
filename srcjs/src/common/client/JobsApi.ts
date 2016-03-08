@@ -35,7 +35,7 @@ module API.Client {
          * 
          * @param id Job ID
          */
-        public getJob (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<JobResponse> {
+        public getJob (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<GetJobResponse> {
             const path = this.basePath + '/jobs/{id}'
                 .replace('{' + 'id' + '}', String(id));
             let queryParameters: any = {};
@@ -60,7 +60,7 @@ module API.Client {
          * Version of the getJob method, but using the provided error handler.
          * @param id Job ID
          */
-        public getJobHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<JobResponse> {
+        public getJobHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<GetJobResponse> {
             return this.getJob(id, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }

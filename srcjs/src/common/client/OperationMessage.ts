@@ -2,7 +2,7 @@
 module API.Client {
     'use strict';
     /**
-     * Holds all of the information regarding an error
+     * Represents an operational message returned from the operation. This can be used to represent both success and failure messages.
      */
     export interface OperationMessage {
         /**
@@ -10,12 +10,12 @@ module API.Client {
          */
         properties?: { [key: string]: string; };
         /**
-         * The Error message
+         * Operation message
          */
         message: string;
         /**
-         * The Error Code
+         * Operation Code
          */
-        errorCode: string;
+        operationCode: string;
     }
 }

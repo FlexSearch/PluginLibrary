@@ -1,7 +1,8 @@
 /// <reference path="api.d.ts" />
 module API.Client {
     'use strict';
-    export interface JobSuccessResponse extends FlexResponse {
+    export interface DuplicateDetectionResponse {
         data?: string;
+        error?: OperationMessage;
     }
 }

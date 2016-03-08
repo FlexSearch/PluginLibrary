@@ -35,7 +35,7 @@ module API.Client {
          * 
          * @param index 
          */
-        public createIndex (index: Index, extraHttpRequestParams?: any ) : ng.IHttpPromise<CreationIdResponse> {
+        public createIndex (index: Index, extraHttpRequestParams?: any ) : ng.IHttpPromise<CreateIndexResponse> {
             const path = this.basePath + '/indices';
             let queryParameters: any = {};
             let headerParams: any = this.extendObj({}, this.defaultHeaders);
@@ -60,16 +60,16 @@ module API.Client {
          * Version of the createIndex method, but using the provided error handler.
          * @param index 
          */
-        public createIndexHandled (index: Index, extraHttpRequestParams?: any ) : ng.IPromise<CreationIdResponse> {
+        public createIndexHandled (index: Index, extraHttpRequestParams?: any ) : ng.IPromise<CreateIndexResponse> {
             return this.createIndex(index, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
-         * Deletes an index by ID
-         * Index deletion happens in two parts, first the index configuration file is\ndeleted from the configurations folder, then the index is deleted from the data\nfolder. In case any error is encountered the cleanup will be performed on the\nserver restart.
+         * Deletes an index
+         * Index deletion happens in two parts, first the index configuration file is deleted from the configurations folder, then the index is deleted from the data folder. In case any error is encountered the cleanup will be performed on the server restart.
          * @param id Index name
          */
-        public deleteIndex (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<FlexResponse> {
+        public deleteIndex (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<DeleteIndexResponse> {
             const path = this.basePath + '/indices/{id}'
                 .replace('{' + 'id' + '}', String(id));
             let queryParameters: any = {};
@@ -94,34 +94,34 @@ module API.Client {
          * Version of the deleteIndex method, but using the provided error handler.
          * @param id Index name
          */
-        public deleteIndexHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<FlexResponse> {
+        public deleteIndexHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<DeleteIndexResponse> {
             return this.deleteIndex(id, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
-         * Connector for importing CSV file data into the system.
-         * 
-         * @param csvIndexingRequest 
+         * Create a document
+         * Creates a new document. Unlike a database system FlexSearch doesn&#39;t impose the requirement of a unique\nID per document. You can add multiple documents by the same ID but this can\nimpose a problem while adding or retrieving them. You can enforce a unique ID\ncheck by using the `timestamp` field. To understand more about ID check and\nconcurrency control, please refer to the article `concurrency control` under\nconcepts section.
+         * @param document 
          * @param id Index name
          */
-        public csv (csvIndexingRequest: CsvIndexingRequest, id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<JobSuccessResponse> {
-            const path = this.basePath + '/indices/{id}/csv'
+        public createDocument (document: Document, id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<CreateDocumentResponse> {
+            const path = this.basePath + '/indices/{id}/documents'
                 .replace('{' + 'id' + '}', String(id));
             let queryParameters: any = {};
             let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            // verify required parameter 'csvIndexingRequest' is set
-            if (!csvIndexingRequest) {
-                throw new Error('Missing required parameter csvIndexingRequest when calling csv');
+            // verify required parameter 'document' is set
+            if (!document) {
+                throw new Error('Missing required parameter document when calling createDocument');
             }
             // verify required parameter 'id' is set
             if (!id) {
-                throw new Error('Missing required parameter id when calling csv');
+                throw new Error('Missing required parameter id when calling createDocument');
             }
             let httpRequestParams: any = {
                 method: 'POST',
                 url: path,
                 json: true,
-                data: csvIndexingRequest,
+                data: document,
                 params: queryParameters,
                 headers: headerParams
             };
@@ -131,12 +131,46 @@ module API.Client {
             return this.$http(httpRequestParams);
         }
         /**
-         * Version of the csv method, but using the provided error handler.
-         * @param csvIndexingRequest 
+         * Version of the createDocument method, but using the provided error handler.
+         * @param document 
          * @param id Index name
          */
-        public csvHandled (csvIndexingRequest: CsvIndexingRequest, id: string, extraHttpRequestParams?: any ) : ng.IPromise<JobSuccessResponse> {
-            return this.csv(csvIndexingRequest, id, extraHttpRequestParams)
+        public createDocumentHandled (document: Document, id: string, extraHttpRequestParams?: any ) : ng.IPromise<CreateDocumentResponse> {
+            return this.createDocument(document, id, extraHttpRequestParams)
+                .then(response => response.data, this.handleError);
+        }
+        /**
+         * Delete all documents
+         * This will remove all the documents present in an index. This is useful when you want to re-index all the documents.
+         * @param id Index name
+         */
+        public deleteAllDocuments (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<DeleteAllDocumentsResponse> {
+            const path = this.basePath + '/indices/{id}/documents'
+                .replace('{' + 'id' + '}', String(id));
+            let queryParameters: any = {};
+            let headerParams: any = this.extendObj({}, this.defaultHeaders);
+            // verify required parameter 'id' is set
+            if (!id) {
+                throw new Error('Missing required parameter id when calling deleteAllDocuments');
+            }
+            let httpRequestParams: any = {
+                method: 'DELETE',
+                url: path,
+                json: true,
+                params: queryParameters,
+                headers: headerParams
+            };
+            if (extraHttpRequestParams) {
+                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+            }
+            return this.$http(httpRequestParams);
+        }
+        /**
+         * Version of the deleteAllDocuments method, but using the provided error handler.
+         * @param id Index name
+         */
+        public deleteAllDocumentsHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<DeleteAllDocumentsResponse> {
+            return this.deleteAllDocuments(id, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
@@ -145,7 +179,7 @@ module API.Client {
          * @param indexId Index name
          * @param docId Document ID
          */
-        public getDocument (indexId: string, docId: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<DocumentResponse> {
+        public getDocument (indexId: string, docId: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<GetDocumentResponse> {
             const path = this.basePath + '/indices/{indexId}/documents/{docId}'
                 .replace('{' + 'indexId' + '}', String(indexId))
                 .replace('{' + 'docId' + '}', String(docId));
@@ -176,18 +210,18 @@ module API.Client {
          * @param indexId Index name
          * @param docId Document ID
          */
-        public getDocumentHandled (indexId: string, docId: string, extraHttpRequestParams?: any ) : ng.IPromise<DocumentResponse> {
+        public getDocumentHandled (indexId: string, docId: string, extraHttpRequestParams?: any ) : ng.IPromise<GetDocumentResponse> {
             return this.getDocument(indexId, docId, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
          * Create or update a document
-         * It is advisable to use create document endpoint when you are sure that the\ndocument does not exist in an index. This service will always perform an ID\nbased look up to determine if a document already exists. In case of non-unique\nID based index, this will replace all the documents with the currently passed\ndocument. This endpoint can be used with concurrency control semantics.
+         * It is advisable to use create document endpoint when you are sure that the document does not exist in an index. This service will always perform an ID based loOK up to determine if a document already exists. In case of non-unique\nID based index, this will replace all the documents with the currently passed document. This endpoint can be used with concurrency control semantics.
          * @param document 
          * @param indexId Index name
          * @param docId Document ID
          */
-        public updateDocument (document: Document, indexId: string, docId: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<FlexResponse> {
+        public createOrUpdateDocument (document: Document, indexId: string, docId: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<CreateOrUpdateDocumentResponse> {
             const path = this.basePath + '/indices/{indexId}/documents/{docId}'
                 .replace('{' + 'indexId' + '}', String(indexId))
                 .replace('{' + 'docId' + '}', String(docId));
@@ -195,15 +229,15 @@ module API.Client {
             let headerParams: any = this.extendObj({}, this.defaultHeaders);
             // verify required parameter 'document' is set
             if (!document) {
-                throw new Error('Missing required parameter document when calling updateDocument');
+                throw new Error('Missing required parameter document when calling createOrUpdateDocument');
             }
             // verify required parameter 'indexId' is set
             if (!indexId) {
-                throw new Error('Missing required parameter indexId when calling updateDocument');
+                throw new Error('Missing required parameter indexId when calling createOrUpdateDocument');
             }
             // verify required parameter 'docId' is set
             if (!docId) {
-                throw new Error('Missing required parameter docId when calling updateDocument');
+                throw new Error('Missing required parameter docId when calling createOrUpdateDocument');
             }
             let httpRequestParams: any = {
                 method: 'PUT',
@@ -219,88 +253,13 @@ module API.Client {
             return this.$http(httpRequestParams);
         }
         /**
-         * Version of the updateDocument method, but using the provided error handler.
+         * Version of the createOrUpdateDocument method, but using the provided error handler.
          * @param document 
          * @param indexId Index name
          * @param docId Document ID
          */
-        public updateDocumentHandled (document: Document, indexId: string, docId: string, extraHttpRequestParams?: any ) : ng.IPromise<FlexResponse> {
-            return this.updateDocument(document, indexId, docId, extraHttpRequestParams)
-                .then(response => response.data, this.handleError);
-        }
-        /**
-         * Creates a new document
-         * Unlike a database system FlexSearch doesn&#39;t impose the requirement of a unique\nID per document. You can add multiple documents by the same ID but this can\nimpose a problem while adding or retrieving them. You can enforce a unique ID\ncheck by using the `timestamp` field. To understand more about ID check and\nconcurrency control, please refer to the article `concurrency control` under\nconcepts section.
-         * @param document 
-         * @param indexName Index name
-         */
-        public createDocument (document: Document, indexName: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<CreationIdResponse> {
-            const path = this.basePath + '/indices/{indexName}/documents'
-                .replace('{' + 'indexName' + '}', String(indexName));
-            let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            // verify required parameter 'document' is set
-            if (!document) {
-                throw new Error('Missing required parameter document when calling createDocument');
-            }
-            // verify required parameter 'indexName' is set
-            if (!indexName) {
-                throw new Error('Missing required parameter indexName when calling createDocument');
-            }
-            let httpRequestParams: any = {
-                method: 'POST',
-                url: path,
-                json: true,
-                data: document,
-                params: queryParameters,
-                headers: headerParams
-            };
-            if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-            }
-            return this.$http(httpRequestParams);
-        }
-        /**
-         * Version of the createDocument method, but using the provided error handler.
-         * @param document 
-         * @param indexName Index name
-         */
-        public createDocumentHandled (document: Document, indexName: string, extraHttpRequestParams?: any ) : ng.IPromise<CreationIdResponse> {
-            return this.createDocument(document, indexName, extraHttpRequestParams)
-                .then(response => response.data, this.handleError);
-        }
-        /**
-         * Deletes all documents present in the index
-         * This will remove all the documents present in an index. This is useful when you\nwant to reindex all the documents.
-         * @param indexName Index name
-         */
-        public deleteDocuments (indexName: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<{}> {
-            const path = this.basePath + '/indices/{indexName}/documents'
-                .replace('{' + 'indexName' + '}', String(indexName));
-            let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            // verify required parameter 'indexName' is set
-            if (!indexName) {
-                throw new Error('Missing required parameter indexName when calling deleteDocuments');
-            }
-            let httpRequestParams: any = {
-                method: 'DELETE',
-                url: path,
-                json: true,
-                params: queryParameters,
-                headers: headerParams
-            };
-            if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-            }
-            return this.$http(httpRequestParams);
-        }
-        /**
-         * Version of the deleteDocuments method, but using the provided error handler.
-         * @param indexName Index name
-         */
-        public deleteDocumentsHandled (indexName: string, extraHttpRequestParams?: any ) : ng.IPromise<{}> {
-            return this.deleteDocuments(indexName, extraHttpRequestParams)
+        public createOrUpdateDocumentHandled (document: Document, indexId: string, docId: string, extraHttpRequestParams?: any ) : ng.IPromise<CreateOrUpdateDocumentResponse> {
+            return this.createOrUpdateDocument(document, indexId, docId, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
@@ -310,7 +269,7 @@ module API.Client {
          * @param indexName Index name
          * @param predefinedQueryName Predefined query name
          */
-        public duplicateDetection (duplicateDetectionRequest: DuplicateDetectionRequest, indexName: string, predefinedQueryName: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<JobSuccessResponse> {
+        public duplicateDetection (duplicateDetectionRequest: DuplicateDetectionRequest, indexName: string, predefinedQueryName: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<DuplicateDetectionResponse> {
             const path = this.basePath + '/indices/{indexName}/duplicatedetection/{predefinedQueryName}'
                 .replace('{' + 'indexName' + '}', String(indexName))
                 .replace('{' + 'predefinedQueryName' + '}', String(predefinedQueryName));
@@ -347,28 +306,52 @@ module API.Client {
          * @param indexName Index name
          * @param predefinedQueryName Predefined query name
          */
-        public duplicateDetectionHandled (duplicateDetectionRequest: DuplicateDetectionRequest, indexName: string, predefinedQueryName: string, extraHttpRequestParams?: any ) : ng.IPromise<JobSuccessResponse> {
+        public duplicateDetectionHandled (duplicateDetectionRequest: DuplicateDetectionRequest, indexName: string, predefinedQueryName: string, extraHttpRequestParams?: any ) : ng.IPromise<DuplicateDetectionResponse> {
             return this.duplicateDetection(duplicateDetectionRequest, indexName, predefinedQueryName, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
-         * Search and index
-         * Search across the index for documents using SQL like query syntax.\n\n&lt;div class= \&quot;note\&quot;&gt;\nAny parameter passed as part of query string takes precedence over the same\nparameter in the request body.\n&lt;/div&gt;\n\nRefer to the search DSL section to learn more about FlexSearch&#39;s querying capability.
-         * @param searchQuery 
+         * Search in a index
+         * Search across the index for documents. Any parameter passed as part of query string takes precedence over the same parameter in the request body. This operation supports both GET &amp; POST verbs.
          * @param indexName Index name
+         * @param searchQuery 
+         * @param q Short hand for &#39;QueryString&#39;.
+         * @param c Columns to be retrieved. Use * to retrieve all columns.
+         * @param count Count parameter. Refer to &#39;Search Query&#39; properties.
+         * @param skip Skip parameter. Refer to &#39;Search Query&#39; properties.
+         * @param orderby Order by parameter. Refer to &#39;Search Query&#39; properties.
+         * @param orderbydirection Order by Direction parameter. Refer to &#39;Search Query&#39; properties.
          */
-        public postSearch (searchQuery: SearchQuery, indexName: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<SearchResultsResponse> {
+        public search (indexName: string, searchQuery: SearchQuery, q?: string, c?: number, count?: number, skip?: number, orderby?: string, orderbydirection?: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<SearchResponse> {
             const path = this.basePath + '/indices/{indexName}/search'
                 .replace('{' + 'indexName' + '}', String(indexName));
             let queryParameters: any = {};
             let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            // verify required parameter 'searchQuery' is set
-            if (!searchQuery) {
-                throw new Error('Missing required parameter searchQuery when calling postSearch');
-            }
             // verify required parameter 'indexName' is set
             if (!indexName) {
-                throw new Error('Missing required parameter indexName when calling postSearch');
+                throw new Error('Missing required parameter indexName when calling search');
+            }
+            // verify required parameter 'searchQuery' is set
+            if (!searchQuery) {
+                throw new Error('Missing required parameter searchQuery when calling search');
+            }
+            if (q !== undefined) {
+                queryParameters['q'] = q;
+            }
+            if (c !== undefined) {
+                queryParameters['c'] = c;
+            }
+            if (count !== undefined) {
+                queryParameters['count'] = count;
+            }
+            if (skip !== undefined) {
+                queryParameters['skip'] = skip;
+            }
+            if (orderby !== undefined) {
+                queryParameters['orderby'] = orderby;
+            }
+            if (orderbydirection !== undefined) {
+                queryParameters['orderbydirection'] = orderbydirection;
             }
             let httpRequestParams: any = {
                 method: 'POST',
@@ -384,53 +367,18 @@ module API.Client {
             return this.$http(httpRequestParams);
         }
         /**
-         * Version of the postSearch method, but using the provided error handler.
-         * @param searchQuery 
+         * Version of the search method, but using the provided error handler.
          * @param indexName Index name
+         * @param searchQuery 
+         * @param q Short hand for &#39;QueryString&#39;.
+         * @param c Columns to be retrieved. Use * to retrieve all columns.
+         * @param count Count parameter. Refer to &#39;Search Query&#39; properties.
+         * @param skip Skip parameter. Refer to &#39;Search Query&#39; properties.
+         * @param orderby Order by parameter. Refer to &#39;Search Query&#39; properties.
+         * @param orderbydirection Order by Direction parameter. Refer to &#39;Search Query&#39; properties.
          */
-        public postSearchHandled (searchQuery: SearchQuery, indexName: string, extraHttpRequestParams?: any ) : ng.IPromise<SearchResultsResponse> {
-            return this.postSearch(searchQuery, indexName, extraHttpRequestParams)
-                .then(response => response.data, this.handleError);
-        }
-        /**
-         * Connector for importing data from Microsoft SQL into the system.
-         * 
-         * @param sqlIndexingRequest The SQL request
-         * @param indexName Index Name
-         */
-        public sql (sqlIndexingRequest: SqlIndexingRequest, indexName: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<JobSuccessResponse> {
-            const path = this.basePath + '/indices/{indexName}/sql'
-                .replace('{' + 'indexName' + '}', String(indexName));
-            let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            // verify required parameter 'sqlIndexingRequest' is set
-            if (!sqlIndexingRequest) {
-                throw new Error('Missing required parameter sqlIndexingRequest when calling sql');
-            }
-            // verify required parameter 'indexName' is set
-            if (!indexName) {
-                throw new Error('Missing required parameter indexName when calling sql');
-            }
-            let httpRequestParams: any = {
-                method: 'POST',
-                url: path,
-                json: true,
-                data: sqlIndexingRequest,
-                params: queryParameters,
-                headers: headerParams
-            };
-            if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-            }
-            return this.$http(httpRequestParams);
-        }
-        /**
-         * Version of the sql method, but using the provided error handler.
-         * @param sqlIndexingRequest The SQL request
-         * @param indexName Index Name
-         */
-        public sqlHandled (sqlIndexingRequest: SqlIndexingRequest, indexName: string, extraHttpRequestParams?: any ) : ng.IPromise<JobSuccessResponse> {
-            return this.sql(sqlIndexingRequest, indexName, extraHttpRequestParams)
+        public searchHandled (indexName: string, searchQuery: SearchQuery, q?: string, c?: number, count?: number, skip?: number, orderby?: string, orderbydirection?: string, extraHttpRequestParams?: any ) : ng.IPromise<SearchResponse> {
+            return this.search(indexName, searchQuery, q, c, count, skip, orderby, orderbydirection, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
     }

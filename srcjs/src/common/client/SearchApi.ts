@@ -31,9 +31,10 @@ module API.Client {
             return <T1&T2>objA;
         }
         /**
-         * Search and index
-         * Search across the index for documents using SQL like query syntax.\n\n&lt;div class= \&quot;note\&quot;&gt;\nAny parameter passed as part of query string takes precedence over the same\nparameter in the request body.\n&lt;/div&gt;\n\nRefer to the search DSL section to learn more about FlexSearch&#39;s querying capability.
+         * Search in a index
+         * Search across the index for documents. Any parameter passed as part of query string takes precedence over the same parameter in the request body. This operation supports both GET &amp; POST verbs.
          * @param indexName Index name
+         * @param searchQuery 
          * @param q Short hand for &#39;QueryString&#39;.
          * @param c Columns to be retrieved. Use * to retrieve all columns.
          * @param count Count parameter. Refer to &#39;Search Query&#39; properties.
@@ -41,7 +42,7 @@ module API.Client {
          * @param orderby Order by parameter. Refer to &#39;Search Query&#39; properties.
          * @param orderbydirection Order by Direction parameter. Refer to &#39;Search Query&#39; properties.
          */
-        public getSearch (indexName: string, q?: string, c?: number, count?: number, skip?: number, orderby?: string, orderbydirection?: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<SearchResultsResponse> {
+        public getSearch (indexName: string, searchQuery: SearchQuery, q?: string, c?: number, count?: number, skip?: number, orderby?: string, orderbydirection?: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<SearchResponse> {
             const path = this.basePath + '/indices/{indexName}/search'
                 .replace('{' + 'indexName' + '}', String(indexName));
             let queryParameters: any = {};
@@ -49,6 +50,10 @@ module API.Client {
             // verify required parameter 'indexName' is set
             if (!indexName) {
                 throw new Error('Missing required parameter indexName when calling getSearch');
+            }
+            // verify required parameter 'searchQuery' is set
+            if (!searchQuery) {
+                throw new Error('Missing required parameter searchQuery when calling getSearch');
             }
             if (q !== undefined) {
                 queryParameters['q'] = q;
@@ -72,6 +77,7 @@ module API.Client {
                 method: 'GET',
                 url: path,
                 json: true,
+                data: searchQuery,
                 params: queryParameters,
                 headers: headerParams
             };
@@ -83,6 +89,7 @@ module API.Client {
         /**
          * Version of the getSearch method, but using the provided error handler.
          * @param indexName Index name
+         * @param searchQuery 
          * @param q Short hand for &#39;QueryString&#39;.
          * @param c Columns to be retrieved. Use * to retrieve all columns.
          * @param count Count parameter. Refer to &#39;Search Query&#39; properties.
@@ -90,28 +97,52 @@ module API.Client {
          * @param orderby Order by parameter. Refer to &#39;Search Query&#39; properties.
          * @param orderbydirection Order by Direction parameter. Refer to &#39;Search Query&#39; properties.
          */
-        public getSearchHandled (indexName: string, q?: string, c?: number, count?: number, skip?: number, orderby?: string, orderbydirection?: string, extraHttpRequestParams?: any ) : ng.IPromise<SearchResultsResponse> {
-            return this.getSearch(indexName, q, c, count, skip, orderby, orderbydirection, extraHttpRequestParams)
+        public getSearchHandled (indexName: string, searchQuery: SearchQuery, q?: string, c?: number, count?: number, skip?: number, orderby?: string, orderbydirection?: string, extraHttpRequestParams?: any ) : ng.IPromise<SearchResponse> {
+            return this.getSearch(indexName, searchQuery, q, c, count, skip, orderby, orderbydirection, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
-         * Search and index
-         * Search across the index for documents using SQL like query syntax.\n\n&lt;div class= \&quot;note\&quot;&gt;\nAny parameter passed as part of query string takes precedence over the same\nparameter in the request body.\n&lt;/div&gt;\n\nRefer to the search DSL section to learn more about FlexSearch&#39;s querying capability.
-         * @param searchQuery 
+         * Search in a index
+         * Search across the index for documents. Any parameter passed as part of query string takes precedence over the same parameter in the request body. This operation supports both GET &amp; POST verbs.
          * @param indexName Index name
+         * @param searchQuery 
+         * @param q Short hand for &#39;QueryString&#39;.
+         * @param c Columns to be retrieved. Use * to retrieve all columns.
+         * @param count Count parameter. Refer to &#39;Search Query&#39; properties.
+         * @param skip Skip parameter. Refer to &#39;Search Query&#39; properties.
+         * @param orderby Order by parameter. Refer to &#39;Search Query&#39; properties.
+         * @param orderbydirection Order by Direction parameter. Refer to &#39;Search Query&#39; properties.
          */
-        public postSearch (searchQuery: SearchQuery, indexName: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<SearchResultsResponse> {
+        public search (indexName: string, searchQuery: SearchQuery, q?: string, c?: number, count?: number, skip?: number, orderby?: string, orderbydirection?: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<SearchResponse> {
             const path = this.basePath + '/indices/{indexName}/search'
                 .replace('{' + 'indexName' + '}', String(indexName));
             let queryParameters: any = {};
             let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            // verify required parameter 'searchQuery' is set
-            if (!searchQuery) {
-                throw new Error('Missing required parameter searchQuery when calling postSearch');
-            }
             // verify required parameter 'indexName' is set
             if (!indexName) {
-                throw new Error('Missing required parameter indexName when calling postSearch');
+                throw new Error('Missing required parameter indexName when calling search');
+            }
+            // verify required parameter 'searchQuery' is set
+            if (!searchQuery) {
+                throw new Error('Missing required parameter searchQuery when calling search');
+            }
+            if (q !== undefined) {
+                queryParameters['q'] = q;
+            }
+            if (c !== undefined) {
+                queryParameters['c'] = c;
+            }
+            if (count !== undefined) {
+                queryParameters['count'] = count;
+            }
+            if (skip !== undefined) {
+                queryParameters['skip'] = skip;
+            }
+            if (orderby !== undefined) {
+                queryParameters['orderby'] = orderby;
+            }
+            if (orderbydirection !== undefined) {
+                queryParameters['orderbydirection'] = orderbydirection;
             }
             let httpRequestParams: any = {
                 method: 'POST',
@@ -127,71 +158,18 @@ module API.Client {
             return this.$http(httpRequestParams);
         }
         /**
-         * Version of the postSearch method, but using the provided error handler.
+         * Version of the search method, but using the provided error handler.
+         * @param indexName Index name
          * @param searchQuery 
-         * @param indexName Index name
-         */
-        public postSearchHandled (searchQuery: SearchQuery, indexName: string, extraHttpRequestParams?: any ) : ng.IPromise<SearchResultsResponse> {
-            return this.postSearch(searchQuery, indexName, extraHttpRequestParams)
-                .then(response => response.data, this.handleError);
-        }
-        /**
-         * Deletes document by query
-         * Deletes all document returned by the search query for the given index. Returns the records identified\nby the search query.
-         * @param indexName Index name
          * @param q Short hand for &#39;QueryString&#39;.
+         * @param c Columns to be retrieved. Use * to retrieve all columns.
          * @param count Count parameter. Refer to &#39;Search Query&#39; properties.
          * @param skip Skip parameter. Refer to &#39;Search Query&#39; properties.
          * @param orderby Order by parameter. Refer to &#39;Search Query&#39; properties.
          * @param orderbydirection Order by Direction parameter. Refer to &#39;Search Query&#39; properties.
          */
-        public deleteDocumentsFromSearch (indexName: string, q?: string, count?: number, skip?: number, orderby?: string, orderbydirection?: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<SearchResultsResponse> {
-            const path = this.basePath + '/indices/{indexName}/search'
-                .replace('{' + 'indexName' + '}', String(indexName));
-            let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            // verify required parameter 'indexName' is set
-            if (!indexName) {
-                throw new Error('Missing required parameter indexName when calling deleteDocumentsFromSearch');
-            }
-            if (q !== undefined) {
-                queryParameters['q'] = q;
-            }
-            if (count !== undefined) {
-                queryParameters['count'] = count;
-            }
-            if (skip !== undefined) {
-                queryParameters['skip'] = skip;
-            }
-            if (orderby !== undefined) {
-                queryParameters['orderby'] = orderby;
-            }
-            if (orderbydirection !== undefined) {
-                queryParameters['orderbydirection'] = orderbydirection;
-            }
-            let httpRequestParams: any = {
-                method: 'DELETE',
-                url: path,
-                json: true,
-                params: queryParameters,
-                headers: headerParams
-            };
-            if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-            }
-            return this.$http(httpRequestParams);
-        }
-        /**
-         * Version of the deleteDocumentsFromSearch method, but using the provided error handler.
-         * @param indexName Index name
-         * @param q Short hand for &#39;QueryString&#39;.
-         * @param count Count parameter. Refer to &#39;Search Query&#39; properties.
-         * @param skip Skip parameter. Refer to &#39;Search Query&#39; properties.
-         * @param orderby Order by parameter. Refer to &#39;Search Query&#39; properties.
-         * @param orderbydirection Order by Direction parameter. Refer to &#39;Search Query&#39; properties.
-         */
-        public deleteDocumentsFromSearchHandled (indexName: string, q?: string, count?: number, skip?: number, orderby?: string, orderbydirection?: string, extraHttpRequestParams?: any ) : ng.IPromise<SearchResultsResponse> {
-            return this.deleteDocumentsFromSearch(indexName, q, count, skip, orderby, orderbydirection, extraHttpRequestParams)
+        public searchHandled (indexName: string, searchQuery: SearchQuery, q?: string, c?: number, count?: number, skip?: number, orderby?: string, orderbydirection?: string, extraHttpRequestParams?: any ) : ng.IPromise<SearchResponse> {
+            return this.search(indexName, searchQuery, q, c, count, skip, orderby, orderbydirection, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
     }

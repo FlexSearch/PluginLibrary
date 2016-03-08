@@ -24,10 +24,6 @@ module API.Client {
         /**
          * 
          */
-        scriptName?: string;
-        /**
-         * 
-         */
         searchAnalyzer?: string;
         /**
          * Similarity defines the components of scoring. Similarity determines how \r\nengine weights terms. FlexSearch interacts with Similarity at both index-time \r\nand query-time.

@@ -4,7 +4,7 @@ module API.Client {
     /**
      * A request object which can be used to analyze a text input using an analyzer.
      */
-    export interface AnalysisRequest {
+    export interface AnalyzeText {
         /**
          * The text to be analyzed by the analyzer.
          */
