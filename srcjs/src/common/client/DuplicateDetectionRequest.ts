@@ -6,7 +6,7 @@ module API.Client {
      */
     export interface DuplicateDetectionRequest {
         /**
-         * The query that filters the records to include in the deduplication
+         * The query that filters the records to include in the duplicate detection
          */
         selectionQuery?: string;
         /**
@@ -18,23 +18,23 @@ module API.Client {
          */
         displayName: string;
         /**
-         * The number of threads on which to run the deduplication.
+         * The number of threads on which to run the duplicate detection.
          */
         threadCount?: number;
         /**
-         * The name of the index on which to run the session
+         * The name of the index on which the operation is to be performed.
          */
         indexName: string;
         /**
-         * The name of the query used for deduplication.
+         * The name of the query used for duplication detection.
          */
         predefinedQueryName: string;
         /**
-         * The maxmimum number of records to scan for deduplication
+         * The maximum number of records to scan for duplication detection
          */
         maxRecordsToScan?: number;
         /**
-         * The maxmimum number of duplicates to include in the result
+         * The maximum number of duplicates to include in the result
          */
         duplicatesCount?: number;
     }

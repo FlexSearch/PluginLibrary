@@ -2,7 +2,7 @@
 module API.Client {
     'use strict';
     /**
-     * Represents a request which can be sent to Sql connector to index SQL data
+     * Represents a request which can be sent to SQL connector to index SQL data
      */
     export interface SqlIndexingRequest {
         /**
@@ -10,7 +10,7 @@ module API.Client {
          */
         indexName: string;
         /**
-         * The query to be used to fetch data from Sql server
+         * The query to be used to fetch data from SQL server
          */
         query: string;
         /**
@@ -22,7 +22,7 @@ module API.Client {
          */
         forceCreate?: boolean;
         /**
-         * Signifies if the connector should create a job for the task and return a jobId which can be used\nto check the status of the job.
+         * Signifies if the connector should create a job for the task and return a jobId which can be used to check the status of the job.
          */
         createJob?: boolean;
     }

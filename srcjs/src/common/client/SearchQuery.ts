@@ -51,10 +51,6 @@ module API.Client {
          */
         returnScore?: boolean;
         /**
-         * Predefined Query to be used when searching based on a template.
-         */
-        predefinedQuery?: string;
-        /**
          * Script that is executed before submitting the search to Lucene. It can be used to modify the incoming Variables
          */
         preSearchScript?: string;

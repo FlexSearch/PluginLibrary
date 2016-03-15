@@ -10,7 +10,7 @@ module API.Client {
          */
         filterName: string;
         /**
-         * 
+         * Key value pair to be used to configure object's properties.
          */
         parameters?: { [key: string]: string; };
     }

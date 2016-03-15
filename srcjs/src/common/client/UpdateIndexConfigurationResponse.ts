@@ -2,7 +2,7 @@
 module API.Client {
     'use strict';
     export interface UpdateIndexConfigurationResponse {
-        data?: OperationMessage;
+        data?: boolean;
         error?: OperationMessage;
     }
 }

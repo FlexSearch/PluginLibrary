@@ -6,15 +6,15 @@ module API.Client {
      */
     export interface OperationMessage {
         /**
-         * The list of key value pairs holding the data of the error
+         * The list of key value pairs providing information about the operation.
          */
         properties?: { [key: string]: string; };
         /**
-         * Operation message
+         * The actual message returned by the operation.
          */
         message: string;
         /**
-         * Operation Code
+         * Operation Code associated with the message.
          */
         operationCode: string;
     }

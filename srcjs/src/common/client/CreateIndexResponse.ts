@@ -2,7 +2,7 @@
 module API.Client {
     'use strict';
     export interface CreateIndexResponse {
-        data?: OperationMessage;
+        data?: boolean;
         error?: OperationMessage;
     }
 }

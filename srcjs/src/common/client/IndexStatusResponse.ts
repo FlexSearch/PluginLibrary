@@ -2,7 +2,7 @@
 module API.Client {
     'use strict';
     /**
-     * Represents the response of an Index status request - tells whether an index is online, offline, opening, etc.
+     * Represents the response of an Index status request - tells whether an index is online, off-line, opening, etc.
      */
     export interface IndexStatusResponse {
         /**

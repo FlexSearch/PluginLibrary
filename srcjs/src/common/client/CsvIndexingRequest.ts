@@ -6,7 +6,7 @@ module API.Client {
      */
     export interface CsvIndexingRequest {
         /**
-         * Name of the index
+         * The name of the index on which the operation is to be performed.
          */
         indexName: string;
         /**

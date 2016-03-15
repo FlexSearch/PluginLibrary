@@ -65,115 +65,6 @@ module API.Client {
                 .then(response => response.data, this.handleError);
         }
         /**
-         * Deletes an index
-         * Index deletion happens in two parts, first the index configuration file is deleted from the configurations folder, then the index is deleted from the data folder. In case any error is encountered the cleanup will be performed on the server restart.
-         * @param id Index name
-         */
-        public deleteIndex (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<DeleteIndexResponse> {
-            const path = this.basePath + '/indices/{id}'
-                .replace('{' + 'id' + '}', String(id));
-            let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            // verify required parameter 'id' is set
-            if (!id) {
-                throw new Error('Missing required parameter id when calling deleteIndex');
-            }
-            let httpRequestParams: any = {
-                method: 'DELETE',
-                url: path,
-                json: true,
-                params: queryParameters,
-                headers: headerParams
-            };
-            if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-            }
-            return this.$http(httpRequestParams);
-        }
-        /**
-         * Version of the deleteIndex method, but using the provided error handler.
-         * @param id Index name
-         */
-        public deleteIndexHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<DeleteIndexResponse> {
-            return this.deleteIndex(id, extraHttpRequestParams)
-                .then(response => response.data, this.handleError);
-        }
-        /**
-         * Create a document
-         * Creates a new document. Unlike a database system FlexSearch doesn&#39;t impose the requirement of a unique\nID per document. You can add multiple documents by the same ID but this can\nimpose a problem while adding or retrieving them. You can enforce a unique ID\ncheck by using the `timestamp` field. To understand more about ID check and\nconcurrency control, please refer to the article `concurrency control` under\nconcepts section.
-         * @param document 
-         * @param id Index name
-         */
-        public createDocument (document: Document, id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<CreateDocumentResponse> {
-            const path = this.basePath + '/indices/{id}/documents'
-                .replace('{' + 'id' + '}', String(id));
-            let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            // verify required parameter 'document' is set
-            if (!document) {
-                throw new Error('Missing required parameter document when calling createDocument');
-            }
-            // verify required parameter 'id' is set
-            if (!id) {
-                throw new Error('Missing required parameter id when calling createDocument');
-            }
-            let httpRequestParams: any = {
-                method: 'POST',
-                url: path,
-                json: true,
-                data: document,
-                params: queryParameters,
-                headers: headerParams
-            };
-            if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-            }
-            return this.$http(httpRequestParams);
-        }
-        /**
-         * Version of the createDocument method, but using the provided error handler.
-         * @param document 
-         * @param id Index name
-         */
-        public createDocumentHandled (document: Document, id: string, extraHttpRequestParams?: any ) : ng.IPromise<CreateDocumentResponse> {
-            return this.createDocument(document, id, extraHttpRequestParams)
-                .then(response => response.data, this.handleError);
-        }
-        /**
-         * Delete all documents
-         * This will remove all the documents present in an index. This is useful when you want to re-index all the documents.
-         * @param id Index name
-         */
-        public deleteAllDocuments (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<DeleteAllDocumentsResponse> {
-            const path = this.basePath + '/indices/{id}/documents'
-                .replace('{' + 'id' + '}', String(id));
-            let queryParameters: any = {};
-            let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            // verify required parameter 'id' is set
-            if (!id) {
-                throw new Error('Missing required parameter id when calling deleteAllDocuments');
-            }
-            let httpRequestParams: any = {
-                method: 'DELETE',
-                url: path,
-                json: true,
-                params: queryParameters,
-                headers: headerParams
-            };
-            if (extraHttpRequestParams) {
-                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-            }
-            return this.$http(httpRequestParams);
-        }
-        /**
-         * Version of the deleteAllDocuments method, but using the provided error handler.
-         * @param id Index name
-         */
-        public deleteAllDocumentsHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<DeleteAllDocumentsResponse> {
-            return this.deleteAllDocuments(id, extraHttpRequestParams)
-                .then(response => response.data, this.handleError);
-        }
-        /**
          * Returns document by ID
          * 
          * @param indexId Index name
@@ -260,6 +151,115 @@ module API.Client {
          */
         public createOrUpdateDocumentHandled (document: Document, indexId: string, docId: string, extraHttpRequestParams?: any ) : ng.IPromise<CreateOrUpdateDocumentResponse> {
             return this.createOrUpdateDocument(document, indexId, docId, extraHttpRequestParams)
+                .then(response => response.data, this.handleError);
+        }
+        /**
+         * Deletes an index
+         * Index deletion happens in two parts, first the index configuration file is deleted from the configurations folder, then the index is deleted from the data folder. In case any error is encountered the cleanup will be performed on the server restart.
+         * @param indexName Index name
+         */
+        public deleteIndex (indexName: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<DeleteIndexResponse> {
+            const path = this.basePath + '/indices/{indexName}'
+                .replace('{' + 'indexName' + '}', String(indexName));
+            let queryParameters: any = {};
+            let headerParams: any = this.extendObj({}, this.defaultHeaders);
+            // verify required parameter 'indexName' is set
+            if (!indexName) {
+                throw new Error('Missing required parameter indexName when calling deleteIndex');
+            }
+            let httpRequestParams: any = {
+                method: 'DELETE',
+                url: path,
+                json: true,
+                params: queryParameters,
+                headers: headerParams
+            };
+            if (extraHttpRequestParams) {
+                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+            }
+            return this.$http(httpRequestParams);
+        }
+        /**
+         * Version of the deleteIndex method, but using the provided error handler.
+         * @param indexName Index name
+         */
+        public deleteIndexHandled (indexName: string, extraHttpRequestParams?: any ) : ng.IPromise<DeleteIndexResponse> {
+            return this.deleteIndex(indexName, extraHttpRequestParams)
+                .then(response => response.data, this.handleError);
+        }
+        /**
+         * Create a document
+         * Creates a new document. Unlike a database system FlexSearch doesn&#39;t impose the requirement of a unique\nID per document. You can add multiple documents by the same ID but this can\nimpose a problem while adding or retrieving them. You can enforce a unique ID\ncheck by using the `timestamp` field. To understand more about ID check and\nconcurrency control, please refer to the article `concurrency control` under\nconcepts section.
+         * @param document 
+         * @param indexName Index name
+         */
+        public createDocument (document: Document, indexName: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<CreateDocumentResponse> {
+            const path = this.basePath + '/indices/{indexName}/documents'
+                .replace('{' + 'indexName' + '}', String(indexName));
+            let queryParameters: any = {};
+            let headerParams: any = this.extendObj({}, this.defaultHeaders);
+            // verify required parameter 'document' is set
+            if (!document) {
+                throw new Error('Missing required parameter document when calling createDocument');
+            }
+            // verify required parameter 'indexName' is set
+            if (!indexName) {
+                throw new Error('Missing required parameter indexName when calling createDocument');
+            }
+            let httpRequestParams: any = {
+                method: 'POST',
+                url: path,
+                json: true,
+                data: document,
+                params: queryParameters,
+                headers: headerParams
+            };
+            if (extraHttpRequestParams) {
+                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+            }
+            return this.$http(httpRequestParams);
+        }
+        /**
+         * Version of the createDocument method, but using the provided error handler.
+         * @param document 
+         * @param indexName Index name
+         */
+        public createDocumentHandled (document: Document, indexName: string, extraHttpRequestParams?: any ) : ng.IPromise<CreateDocumentResponse> {
+            return this.createDocument(document, indexName, extraHttpRequestParams)
+                .then(response => response.data, this.handleError);
+        }
+        /**
+         * Delete all documents
+         * This will remove all the documents present in an index. This is useful when you want to re-index all the documents.
+         * @param indexName Index name
+         */
+        public deleteAllDocuments (indexName: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<DeleteAllDocumentsResponse> {
+            const path = this.basePath + '/indices/{indexName}/documents'
+                .replace('{' + 'indexName' + '}', String(indexName));
+            let queryParameters: any = {};
+            let headerParams: any = this.extendObj({}, this.defaultHeaders);
+            // verify required parameter 'indexName' is set
+            if (!indexName) {
+                throw new Error('Missing required parameter indexName when calling deleteAllDocuments');
+            }
+            let httpRequestParams: any = {
+                method: 'DELETE',
+                url: path,
+                json: true,
+                params: queryParameters,
+                headers: headerParams
+            };
+            if (extraHttpRequestParams) {
+                httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+            }
+            return this.$http(httpRequestParams);
+        }
+        /**
+         * Version of the deleteAllDocuments method, but using the provided error handler.
+         * @param indexName Index name
+         */
+        public deleteAllDocumentsHandled (indexName: string, extraHttpRequestParams?: any ) : ng.IPromise<DeleteAllDocumentsResponse> {
+            return this.deleteAllDocuments(indexName, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**

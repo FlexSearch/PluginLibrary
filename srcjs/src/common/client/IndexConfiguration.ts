@@ -50,11 +50,11 @@ module API.Client {
          */
         indexVersion?: IndexConfiguration.IndexVersionEnum;
         /**
-         * 
+         * Signifies if the index supports reading back of indexed data.
          */
         allowReads?: boolean;
         /**
-         * 
+         * Signifies if the index supports modification of data.
          */
         allowWrites?: boolean;
     }

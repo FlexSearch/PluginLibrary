@@ -33,16 +33,16 @@ module API.Client {
         /**
          * Returns job information
          * 
-         * @param id Job ID
+         * @param jobId Job ID
          */
-        public getJob (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<GetJobResponse> {
-            const path = this.basePath + '/jobs/{id}'
-                .replace('{' + 'id' + '}', String(id));
+        public getJob (jobId: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<GetJobResponse> {
+            const path = this.basePath + '/jobs/{jobId}'
+                .replace('{' + 'jobId' + '}', String(jobId));
             let queryParameters: any = {};
             let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            // verify required parameter 'id' is set
-            if (!id) {
-                throw new Error('Missing required parameter id when calling getJob');
+            // verify required parameter 'jobId' is set
+            if (!jobId) {
+                throw new Error('Missing required parameter jobId when calling getJob');
             }
             let httpRequestParams: any = {
                 method: 'GET',
@@ -58,10 +58,10 @@ module API.Client {
         }
         /**
          * Version of the getJob method, but using the provided error handler.
-         * @param id Job ID
+         * @param jobId Job ID
          */
-        public getJobHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<GetJobResponse> {
-            return this.getJob(id, extraHttpRequestParams)
+        public getJobHandled (jobId: string, extraHttpRequestParams?: any ) : ng.IPromise<GetJobResponse> {
+            return this.getJob(jobId, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
     }

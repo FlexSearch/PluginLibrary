@@ -60,16 +60,16 @@ module API.Client {
         /**
          * Get analyzer
          * Returns an analyzer by name.
-         * @param id Analyzer name
+         * @param analyzerName Analyzer name
          */
-        public getAnalyzer (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<GetAnalyzerResponse> {
-            const path = this.basePath + '/analyzers/{id}'
-                .replace('{' + 'id' + '}', String(id));
+        public getAnalyzer (analyzerName: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<GetAnalyzerResponse> {
+            const path = this.basePath + '/analyzers/{analyzerName}'
+                .replace('{' + 'analyzerName' + '}', String(analyzerName));
             let queryParameters: any = {};
             let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            // verify required parameter 'id' is set
-            if (!id) {
-                throw new Error('Missing required parameter id when calling getAnalyzer');
+            // verify required parameter 'analyzerName' is set
+            if (!analyzerName) {
+                throw new Error('Missing required parameter analyzerName when calling getAnalyzer');
             }
             let httpRequestParams: any = {
                 method: 'GET',
@@ -85,30 +85,30 @@ module API.Client {
         }
         /**
          * Version of the getAnalyzer method, but using the provided error handler.
-         * @param id Analyzer name
+         * @param analyzerName Analyzer name
          */
-        public getAnalyzerHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<GetAnalyzerResponse> {
-            return this.getAnalyzer(id, extraHttpRequestParams)
+        public getAnalyzerHandled (analyzerName: string, extraHttpRequestParams?: any ) : ng.IPromise<GetAnalyzerResponse> {
+            return this.getAnalyzer(analyzerName, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
          * Create or update an analyzer
          * This service is idempotent.
          * @param analyzer 
-         * @param id Analyzer name
+         * @param analyzerName Analyzer name
          */
-        public createOrUpdateAnalyzer (analyzer: Analyzer, id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<CreateOrUpdateAnalyzerResponse> {
-            const path = this.basePath + '/analyzers/{id}'
-                .replace('{' + 'id' + '}', String(id));
+        public createOrUpdateAnalyzer (analyzer: Analyzer, analyzerName: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<CreateOrUpdateAnalyzerResponse> {
+            const path = this.basePath + '/analyzers/{analyzerName}'
+                .replace('{' + 'analyzerName' + '}', String(analyzerName));
             let queryParameters: any = {};
             let headerParams: any = this.extendObj({}, this.defaultHeaders);
             // verify required parameter 'analyzer' is set
             if (!analyzer) {
                 throw new Error('Missing required parameter analyzer when calling createOrUpdateAnalyzer');
             }
-            // verify required parameter 'id' is set
-            if (!id) {
-                throw new Error('Missing required parameter id when calling createOrUpdateAnalyzer');
+            // verify required parameter 'analyzerName' is set
+            if (!analyzerName) {
+                throw new Error('Missing required parameter analyzerName when calling createOrUpdateAnalyzer');
             }
             let httpRequestParams: any = {
                 method: 'PUT',
@@ -126,25 +126,25 @@ module API.Client {
         /**
          * Version of the createOrUpdateAnalyzer method, but using the provided error handler.
          * @param analyzer 
-         * @param id Analyzer name
+         * @param analyzerName Analyzer name
          */
-        public createOrUpdateAnalyzerHandled (analyzer: Analyzer, id: string, extraHttpRequestParams?: any ) : ng.IPromise<CreateOrUpdateAnalyzerResponse> {
-            return this.createOrUpdateAnalyzer(analyzer, id, extraHttpRequestParams)
+        public createOrUpdateAnalyzerHandled (analyzer: Analyzer, analyzerName: string, extraHttpRequestParams?: any ) : ng.IPromise<CreateOrUpdateAnalyzerResponse> {
+            return this.createOrUpdateAnalyzer(analyzer, analyzerName, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
          * Delete an analyzer
          * Deletes an analyzer by name.
-         * @param id Analyzer name
+         * @param analyzerName Analyzer name
          */
-        public deleteAnalyzer (id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<DeleteAnalyzerResponse> {
-            const path = this.basePath + '/analyzers/{id}'
-                .replace('{' + 'id' + '}', String(id));
+        public deleteAnalyzer (analyzerName: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<DeleteAnalyzerResponse> {
+            const path = this.basePath + '/analyzers/{analyzerName}'
+                .replace('{' + 'analyzerName' + '}', String(analyzerName));
             let queryParameters: any = {};
             let headerParams: any = this.extendObj({}, this.defaultHeaders);
-            // verify required parameter 'id' is set
-            if (!id) {
-                throw new Error('Missing required parameter id when calling deleteAnalyzer');
+            // verify required parameter 'analyzerName' is set
+            if (!analyzerName) {
+                throw new Error('Missing required parameter analyzerName when calling deleteAnalyzer');
             }
             let httpRequestParams: any = {
                 method: 'DELETE',
@@ -160,30 +160,30 @@ module API.Client {
         }
         /**
          * Version of the deleteAnalyzer method, but using the provided error handler.
-         * @param id Analyzer name
+         * @param analyzerName Analyzer name
          */
-        public deleteAnalyzerHandled (id: string, extraHttpRequestParams?: any ) : ng.IPromise<DeleteAnalyzerResponse> {
-            return this.deleteAnalyzer(id, extraHttpRequestParams)
+        public deleteAnalyzerHandled (analyzerName: string, extraHttpRequestParams?: any ) : ng.IPromise<DeleteAnalyzerResponse> {
+            return this.deleteAnalyzer(analyzerName, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
         /**
          * Analyze input text
          * This endpoint is useful to understand the effect of a particular analyzer on the input text. You can use the service with both custom and built-in analyzers. The returned response contains the tOKenized input.
          * @param analyzeText Text to analyze
-         * @param id Analyzer name
+         * @param analyzerName Analyzer name
          */
-        public analyzeText (analyzeText: AnalyzeText, id: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<AnalyzeTextResponse> {
-            const path = this.basePath + '/analyzers/{id}/analyzetext'
-                .replace('{' + 'id' + '}', String(id));
+        public analyzeText (analyzeText: AnalyzeText, analyzerName: string, extraHttpRequestParams?: any ) : ng.IHttpPromise<AnalyzeTextResponse> {
+            const path = this.basePath + '/analyzers/{analyzerName}/analyzetext'
+                .replace('{' + 'analyzerName' + '}', String(analyzerName));
             let queryParameters: any = {};
             let headerParams: any = this.extendObj({}, this.defaultHeaders);
             // verify required parameter 'analyzeText' is set
             if (!analyzeText) {
                 throw new Error('Missing required parameter analyzeText when calling analyzeText');
             }
-            // verify required parameter 'id' is set
-            if (!id) {
-                throw new Error('Missing required parameter id when calling analyzeText');
+            // verify required parameter 'analyzerName' is set
+            if (!analyzerName) {
+                throw new Error('Missing required parameter analyzerName when calling analyzeText');
             }
             let httpRequestParams: any = {
                 method: 'POST',
@@ -201,10 +201,10 @@ module API.Client {
         /**
          * Version of the analyzeText method, but using the provided error handler.
          * @param analyzeText Text to analyze
-         * @param id Analyzer name
+         * @param analyzerName Analyzer name
          */
-        public analyzeTextHandled (analyzeText: AnalyzeText, id: string, extraHttpRequestParams?: any ) : ng.IPromise<AnalyzeTextResponse> {
-            return this.analyzeText(analyzeText, id, extraHttpRequestParams)
+        public analyzeTextHandled (analyzeText: AnalyzeText, analyzerName: string, extraHttpRequestParams?: any ) : ng.IPromise<AnalyzeTextResponse> {
+            return this.analyzeText(analyzeText, analyzerName, extraHttpRequestParams)
                 .then(response => response.data, this.handleError);
         }
     }
